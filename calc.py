@@ -1,7 +1,5 @@
-import math
 import sympy as sym
 from decimal import Decimal
-
 
 class Limits:
 
@@ -37,7 +35,7 @@ class Derivative:
         self.dx = Decimal(1e-20)
 
     # calculate derivative using the limit definition of a derivative 
-    def calcDerivative(self, x):
+    def at_point(self, x):
         # limit definition
         value = (self.f(x+self.dx) - self.f(x-self.dx)) / (2*self.dx)
         return round(value, 10)
@@ -45,13 +43,20 @@ class Derivative:
 
 
 
-# TO DO
 class Integral:
 
     def __init__(self, inputFunc):
         self.func = inputFunc
-        self.dx = 1e-10
 
-    def definiteIntegral(self, a, b):
-        # Riemann sums
-        pass
+    # use riemann sums to calculate integral 
+    def definite_integral(self, a, b, n=10000000):
+        dx = (b-a)/n
+
+        step = a
+        sum = 0
+
+        for _ in range(n):
+            sum += self.func(step)*dx
+            step += dx
+
+        return round(sum, 10)
